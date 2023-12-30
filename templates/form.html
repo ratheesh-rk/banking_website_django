@@ -1,0 +1,176 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Info Page</title>
+    <link href="{% static 'css/rstyles.css' %}" rel="stylesheet" />
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <style>
+        .input-box1 {
+            display: inline-block;
+            margin-right: 20px;
+            padding: 15px;
+        }
+
+        .input-box1 label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-box1 select,
+        .input-box1 input {
+            width: 200px;
+            height: 30px;
+            box-sizing: border-box;
+            border: 1px solid #DDDDDD;
+            border-radius: 5px;
+        }
+        .index-link {
+            color: blue !important;
+            text-decoration: none !important;
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 14px;
+            float: right;
+        }
+
+        .index-link:hover {
+            color: darkblue !important;
+        }
+    </style>
+</head>
+<body>
+    <section class="container">
+        <header>Application Form</header>
+        <form action="" method="post" class="form">
+            {% csrf_token %}
+            <div class="input-box">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter full name" required />
+            </div>
+
+            <div class="input-box">
+                <label for="email">Email ID</label>
+                <input type="email" id="email" name="email" placeholder="Enter email id" required />
+            </div>
+
+            <div class="column">
+                <div class="input-box">
+                    <label for="phone_number">Phone Number</label>
+                    <input type="text" id="phone_number" name="phone_number" placeholder="Enter phone number" required />
+                </div>
+
+                <div class="input-box">
+                    <label for="dob">Date Of Birth</label>
+                    <input type="date" id="dob" name="dob" placeholder="Enter DOB" required />
+                </div>
+
+                <div class="input-box">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" placeholder="Enter Age" required />
+                </div>
+            </div>
+
+            <div class="gender-box">
+                <h3>Gender</h3>
+                <div class="gender-option">
+                    <div class="gender">
+                        <input type="radio" id="check-male" name="gender" value="Male" required />
+                        <label for="check-male">Male</label>
+                    </div>
+
+                    <div class="gender">
+                        <input type="radio" id="check-female" name="gender" value="Female" required />
+                        <label for="check-female">Female</label>
+                    </div>
+
+                    <div class="gender">
+                        <input type="radio" id="check-other" name="gender" value="Prefer not to say" required />
+                        <label for="check-other">Prefer not to say</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-box">
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" placeholder="Enter your address" required />
+            </div>
+
+            <div class="input-box1">
+                <label for="district">District</label>
+                <select id="district" name="district" onchange="populateBranches()" required>
+                    <option value="">Select District</option>
+                    <option value="ernakulam">Ernakulam</option>
+                    <option value="thrissur">Thrissur</option>
+                    <option value="alappuzha">Alappuzha</option>
+                </select>
+            </div>
+
+            <div class="input-box1">
+                <label for="branch">Branch</label>
+                <select id="branch" name="branch" required>
+                    <option value="">Select Branch</option>
+                    <!-- Options for branches in Ernakulam -->
+                    <option value="edappally">Edappally</option>
+                    <option value="kalamassery">Kalamassery</option>
+                    <option value="aluva">Aluva</option>
+                    <!-- Options for branches in Thrissur -->
+                    <option value="mannuthy">Mannuthy</option>
+                    <option value="chavakkad">Chavakkad</option>
+                    <option value="peringavu">Peringavu</option>
+                    <!-- Options for branches in Alappuzha -->
+                    <option value="harippad">Harippad</option>
+                    <option value="chengannur">Changannur</option>
+                    <option value="cherthala">Cherthala</option>
+                </select>
+            </div>
+
+            <div class="input-box1">
+                <label for="account-type">Account Type</label>
+                <select id="account-type" name="account-type" required>
+                    <option value="">Select Account Type</option>
+                    <option value="savings">Savings Account</option>
+                    <option value="current">Current Account</option>
+                </select>
+            </div>
+
+            <div class="gender-box">
+                <h3>Materials Provided</h3>
+                <div class="gender-option">
+                    <div class="gender">
+                        <input type="checkbox" id="check-debit-card" name="materials[]" value="debit-card"  />
+                        <label for="check-debit-card">Debit Card</label>
+                    </div>
+
+                    <div class="gender">
+                        <input type="checkbox" id="check-credit-card" name="materials[]" value="credit-card" />
+                        <label for="check-credit-card">Credit Card</label>
+                    </div>
+
+                    <div class="gender">
+                        <input type="checkbox" id="check-cheque-book" name="materials[]" value="cheque-book" />
+                        <label for="check-cheque-book">Cheque Book</label>
+                    </div>
+
+                    <div class="gender">
+                        <input type="checkbox" id="check-online-banking" name="materials[]" value="online-banking" />
+                        <label for="check-online-banking">Online Banking</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <button type="submit">Submit</button>
+             {% for msg in messages %}
+                {{ msg }} <br>
+               <a href="{% url 'index' %}" class="index-link">Return Home</a>
+            {% endfor %}
+
+        </form>
+    </section>
+</body>
+</html>
